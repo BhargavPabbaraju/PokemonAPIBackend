@@ -59,6 +59,7 @@ Welcome to the Pokémon API Backend! This project provides a backend API for man
 5. **Run Migrations:**
 
    ```bash
+   python manage.py makemigrations
    python manage.py migrate
    ```
 
@@ -73,7 +74,7 @@ Welcome to the Pokémon API Backend! This project provides a backend API for man
 7. **Initialize Default Data:**
 
    ```bash
-   python manage.py initialize_data
+   python manage.py initialize_all_defaults
    ```
 
 8. **Run the Development Server:**
@@ -93,38 +94,38 @@ Welcome to the Pokémon API Backend! This project provides a backend API for man
 
 - **Pokémon Endpoints:**
   - `GET /api/pokemon/` - List all Pokémon
-  - `POST /api/pokemon/` - Create a new Pokémon
+  <!-- - `POST /api/pokemon/` - Create a new Pokémon -->
   - `GET /api/pokemon/{id}/` - Retrieve a specific Pokémon
-  - `PUT /api/pokemon/{id}/` - Update a specific Pokémon
-  - `DELETE /api/pokemon/{id}/` - Delete a specific Pokémon
+  <!-- - `PUT /api/pokemon/{id}/` - Update a specific Pokémon
+  - `DELETE /api/pokemon/{id}/` - Delete a specific Pokémon -->
 
 - **Type Endpoints:**
   - `GET /api/type/` - List all Pokémon types
-  - `POST /api/type/` - Create a new Pokémon type
+  <!-- - `POST /api/type/` - Create a new Pokémon type -->
   - `GET /api/type/{id}/` - Retrieve a specific Pokémon type
-  - `PUT /api/type/{id}/` - Update a specific Pokémon type
-  - `DELETE /api/type/{id}/` - Delete a specific Pokémon type
+  <!-- - `PUT /api/type/{id}/` - Update a specific Pokémon type
+  - `DELETE /api/type/{id}/` - Delete a specific Pokémon type -->
 
 - **Shape Endpoints:**
   - `GET /api/shape/` - List all Pokémon shapes
-  - `POST /api/shape/` - Create a new Pokémon shape
+  <!-- - `POST /api/shape/` - Create a new Pokémon shape -->
   - `GET /api/shape/{id}/` - Retrieve a specific Pokémon shape
-  - `PUT /api/shape/{id}/` - Update a specific Pokémon shape
-  - `DELETE /api/shape/{id}/` - Delete a specific Pokémon shape
+  <!-- - `PUT /api/shape/{id}/` - Update a specific Pokémon shape
+  - `DELETE /api/shape/{id}/` - Delete a specific Pokémon shape -->
 
 - **Color Endpoints:**
   - `GET /api/color/` - List all Pokémon colors
-  - `POST /api/color/` - Create a new Pokémon color
+  <!-- - `POST /api/color/` - Create a new Pokémon color -->
   - `GET /api/color/{id}/` - Retrieve a specific Pokémon color
-  - `PUT /api/color/{id}/` - Update a specific Pokémon color
-  - `DELETE /api/color/{id}/` - Delete a specific Pokémon color
+  <!-- - `PUT /api/color/{id}/` - Update a specific Pokémon color -->
+  <!-- - `DELETE /api/color/{id}/` - Delete a specific Pokémon color -->
 
 - **Growth Rate Endpoints:**
   - `GET /api/growth-rate/` - List all growth rates
-  - `POST /api/growth-rate/` - Create a new growth rate
+  <!-- - `POST /api/growth-rate/` - Create a new growth rate -->
   - `GET /api/growth-rate/{id}/` - Retrieve a specific growth rate
-  - `PUT /api/growth-rate/{id}/` - Update a specific growth rate
-  - `DELETE /api/growth-rate/{id}/` - Delete a specific growth rate
+  <!-- - `PUT /api/growth-rate/{id}/` - Update a specific growth rate
+  - `DELETE /api/growth-rate/{id}/` - Delete a specific growth rate -->
 
 ## Contributing
 
