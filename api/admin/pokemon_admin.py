@@ -9,6 +9,38 @@ from django import forms
 @admin.register(PokemonSpecies)
 class PokemonSpeciesAdmin(admin.ModelAdmin):
     ordering = ['number']
+    fieldsets=[
+        (
+            None,
+            {
+                "fields":['number','name'],
+            },
+        ),
+        (
+            'Pokedex Information',
+            {   
+                "classes":['collapse'],
+                "fields":['growth_rate','habitat','base_happiness',('catch_rate','hatch_cycles')],
+            }
+            
+        ),
+        (
+            "Egg Groups",
+            {
+                "classes":['collapse'],
+                "fields":[('egg_group1','egg_group2')],
+            }
+        ),
+        (
+            "Boolean Fields",
+            {
+                "classes":['collapse'],
+                "fields":['has_gender_differences',('is_legendary','is_mythical','is_baby')],
+            }
+        )
+
+    ]
+    list_display = ['number','name']
 
 class PokemonStatInlineForm(forms.ModelForm):
     class Meta:
@@ -80,24 +112,18 @@ class PokemonAdmin(admin.ModelAdmin):
         (
             None,
             {
-                "fields":['species','name','title',('type1','type2'),'generation'],
+                "fields":['pokeapi_id,''species','name','title',('type1','type2'),'generation','form_order','is_female'],
             },
         ),
         (
             'Pokedex Information',
             {   
                 "classes":['collapse'],
-                "fields":[('height','weight'),'color','gender','shape','growth_rate','dex_entry'],
+                "fields":[('height','weight'),'color','gender_rate','shape','dex_entry'],
             }
             
         ),
-        (
-            "Egg Groups",
-            {
-                "classes":['collapse'],
-                "fields":[('egg_group_1','egg_group_2')],
-            }
-        )
+       
     ]
 
     inlines = [PokemonStatInline,PokemonAbilityInline]

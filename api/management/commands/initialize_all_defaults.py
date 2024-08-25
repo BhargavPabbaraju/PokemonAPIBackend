@@ -15,7 +15,9 @@ class Command(BaseCommand):
             'default_egg_groups',
             'default_stats',
             'default_abilities',
+            'default_habitats',
             'initialize_pokemon_species',
+            
             
         ]
 
@@ -24,6 +26,6 @@ class Command(BaseCommand):
             call_command(command)
             self.stdout.write(self.style.SUCCESS(f"{command} executed successfully"))
         
-        #call_command('create_superuser',username='admin',password='admin@1234')
+        
 
         

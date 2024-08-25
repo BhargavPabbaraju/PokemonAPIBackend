@@ -18,6 +18,26 @@ class PokemonSpecies(models.Model):
     
     number = models.PositiveIntegerField(validators=[MinValueValidator(1),MaxValueValidator(2000)],unique=True)
     name = models.CharField(max_length = 100,unique=True)
+    
+    growth_rate = models.ForeignKey(GrowthRate,on_delete = models.RESTRICT,null=True)
+    egg_group1 = models.ForeignKey(to=EggGroup, on_delete = models.RESTRICT, related_name = 'egg_group_1',null=True)
+    egg_group2 = models.ForeignKey(to=EggGroup, on_delete = models.RESTRICT,blank=True,null=True, related_name = 'egg_group_2')
+
+    
+    habitat = models.ForeignKey(to=Habitat, on_delete=models.RESTRICT,null=True)
+    
+    catch_rate = models.SmallIntegerField(validators=[MinValueValidator(0),MaxValueValidator(255)],default=45)
+
+    is_legendary = models.BooleanField(default=False)
+    is_mythical = models.BooleanField(default=False)
+    is_baby = models.BooleanField(default=False)
+
+    has_gender_differences = models.BooleanField(default=False)
+
+    hatch_cycles = models.PositiveIntegerField(validators=[MinValueValidator(5),MaxValueValidator(255)],default=15)
+
+    base_happiness = models.SmallIntegerField(validators=[MinValueValidator(0),MaxValueValidator(255)],default=50)
+
 
     def __str__(self):
         return self.name
@@ -42,23 +62,26 @@ class Pokemon(models.Model):
 
     
     species = models.ForeignKey(to=PokemonSpecies,on_delete=models.CASCADE)
+    name = models.CharField(max_length = 255,blank=True)
     title = models.CharField(max_length = 255)
+    
     type1 = models.ForeignKey(to=PokemonType, on_delete=models.RESTRICT,related_name = 'type1_pokemon')
     type2 = models.ForeignKey(to=PokemonType, on_delete=models.RESTRICT, blank = True, null = True, related_name = 'type2_pokemon')
     color = models.ForeignKey(to=PokemonColor,on_delete=models.RESTRICT)
-    gender = models.IntegerField(choices = GenderRate)
-    growth_rate = models.ForeignKey(GrowthRate,on_delete = models.RESTRICT)
+    gender_rate = models.IntegerField(choices = GenderRate)
+    
     generation = models.PositiveIntegerField(default = 1)
-    egg_group_1 = models.ForeignKey(to=EggGroup, on_delete = models.RESTRICT, related_name = 'egg_group_1')
-    egg_group_2 = models.ForeignKey(to=EggGroup, on_delete = models.RESTRICT,blank=True,null=True, related_name = 'egg_group_2')
+    
+    
     height = models.DecimalField(max_digits=10,decimal_places=2,validators=[MinValueValidator(0.01)])
     weight = models.DecimalField(max_digits=10,decimal_places=2,validators=[MinValueValidator(0.01)])
     shape = models.ForeignKey(to=PokemonShape,on_delete=models.RESTRICT)
     dex_entry = models.TextField(default = '')
     form_order = models.SmallIntegerField(validators=[MinValueValidator(0)],default=0)
-    name = models.CharField(max_length = 255,blank=True)
+    
     pokeapi_id = models.PositiveIntegerField(default=1)
     
+    is_female = models.BooleanField(default=False)
 
     
 

@@ -49,6 +49,18 @@ class PokemonColorViewSet(viewsets.ModelViewSet):
 class EggGroupViewSet(viewsets.ModelViewSet):
     queryset = EggGroup.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    serializer_class = EggGroupSerializer
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return EggGroupListSerializer
+        return EggGroupDetailSerializer
 
 
+class HabitatViewSet(viewsets.ModelViewSet):
+    queryset = Habitat.objects.all()
+    permission_classes =[permissions.IsAuthenticated]
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return HabitatListSerializer
+        return HabitatDetailSerializer
+    

@@ -12,6 +12,7 @@ router.register('pokemon-shape',views.PokemonShapeViewSet,basename='pokemon-shap
 router.register('growth-rate',views.GrowthRateViewSet,basename='growth-rate')
 router.register('pokemon-color',views.PokemonColorViewSet,basename='pokemon-color')
 router.register('egg-group',views.EggGroupViewSet,basename='egg-group')
+router.register('habitat',views.HabitatViewSet,basename='habitat')
 router.register('pokemon-species',views.PokemonSpeciesViewSet,basename='pokemon-species')
 router.register('pokemon',views.PokemonViewSet,basename='pokemon')
 

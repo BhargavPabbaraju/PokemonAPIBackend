@@ -27,7 +27,7 @@ Welcome to the Pokémon API Backend! This project provides a backend API for man
 
 - **Django:** A high-level Python web framework.
 - **Django REST Framework:** A powerful toolkit for building Web APIs.
-- **PostgreSQL/MySQL:** Relational database management system (adjustable based on configuration).
+- **SQLite3:** Relational database management system (adjustable based on configuration).
 - **Python 3.8+**
 
 ## Installation
