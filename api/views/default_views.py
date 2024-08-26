@@ -44,7 +44,11 @@ class GrowthRateViewSet(viewsets.ModelViewSet):
 class PokemonColorViewSet(viewsets.ModelViewSet):
     queryset = PokemonColor.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    serializer_class = PokemonColorSerializer
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PokemonColorListSerializer
+        return PokemonColorDetailSerializer
+
 
 class EggGroupViewSet(viewsets.ModelViewSet):
     queryset = EggGroup.objects.all()

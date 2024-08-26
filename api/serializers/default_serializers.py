@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from api.models.default_models import *
-from api.models.pokemon_models import PokemonSpecies
+from api.models import *
 from django.urls import reverse
 
 
@@ -33,9 +32,22 @@ class AbilityListSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url','name']
         
 class AbilityDetailSerializer(serializers.HyperlinkedModelSerializer):
+    pokemon = serializers.SerializerMethodField()
     class Meta:
         model = Ability
-        fields = ['url','name','effect']
+        fields = ['url','name','effect','pokemon']
+    
+    def get_pokemon(self,obj):
+        pokemon_list = []
+        for pokemon_ability in PokemonAbility.objects.filter(ability = obj):
+            pokemon = pokemon_ability.pokemon
+            pokemon_list.append(
+                {'url':self.context['request'].build_absolute_uri(
+                    reverse('pokemon-detail',args=[pokemon.pk]),
+                ),
+                'name':pokemon.name}
+            )
+        return pokemon_list
 
 
 class StatSerializer(serializers.HyperlinkedModelSerializer):
@@ -52,9 +64,21 @@ class PokemonShapeListSerializer(serializers.HyperlinkedModelSerializer):
 
 class PokemonShapeDetailSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='pokemon-shape-detail')
+    pokemon = serializers.SerializerMethodField()
     class Meta:
         model = PokemonShape
-        fields = ['url','name','awesome_name']
+        fields = ['url','name','awesome_name','pokemon']
+    
+    def get_pokemon(self,obj):
+        pokemon_list = []
+        for pokemon in Pokemon.objects.filter(shape = obj):
+            pokemon_list.append(
+                {'url':self.context['request'].build_absolute_uri(
+                    reverse('pokemon-detail',args=[pokemon.pk]),
+                ),
+                'name':pokemon.name}
+            )
+        return pokemon_list
 
 class GrowthRateListSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='growth-rate-detail')
@@ -75,11 +99,29 @@ class GrowthRateDetailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
-class PokemonColorSerializer(serializers.HyperlinkedModelSerializer):
+class PokemonColorListSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='pokemon-color-detail')
     class Meta:
         model = PokemonColor
         fields = ['url','name']
+
+class PokemonColorDetailSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='pokemon-color-detail')
+    pokemon = serializers.SerializerMethodField()
+    class Meta:
+        model = PokemonColor
+        fields = ['url','name','pokemon']
+    def get_pokemon(self,obj):
+        pokemon_list = []
+        for pokemon in Pokemon.objects.filter(color = obj):
+            pokemon_list.append(
+                {'url':self.context['request'].build_absolute_uri(
+                    reverse('pokemon-detail',args=[pokemon.pk]),
+                ),
+                'name':pokemon.name}
+            )
+        return pokemon_list
+    
 
 class EggGroupListSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='egg-group-detail')

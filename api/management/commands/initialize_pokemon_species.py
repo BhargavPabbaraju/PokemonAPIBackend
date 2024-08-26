@@ -27,6 +27,7 @@ class Command(BaseCommand):
                     is_legendary = eval(species['is_legendary']),
                     is_mythical = eval(species['is_mythical']),
                     is_baby = eval(species['is_baby']),
+                    gender_rate = int(species['gender_rate']),
                     )
                 species_obj.save()
                 count+=1

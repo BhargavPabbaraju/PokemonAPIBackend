@@ -17,7 +17,7 @@ class Command(BaseCommand):
             'default_abilities',
             'default_habitats',
             'initialize_pokemon_species',
-            
+            'initialize_pokemon',
             
         ]
 

@@ -5,8 +5,8 @@ DEFAULT_STATS = [
     'HP',
     'Attack',
     'Defense',
-    'Special Attack',
-    'Special Defense',
+    'Sp.Attack',
+    'Sp.Defense',
     'Speed',
     
 ]

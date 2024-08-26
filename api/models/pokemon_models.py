@@ -16,6 +16,16 @@ class PokemonSpecies(models.Model):
         verbose_name = 'Pokémon Species'
         verbose_name_plural = 'Pokémon Species'
     
+    class GenderRate(models.IntegerChoices):
+        GENDERLESS = -1
+        MALE = 0
+        FEMALE = 8
+        EQUAL = 4
+        SEVENMALE = 1
+        SEVENFEMALE = 7
+        THREEMALE = 2
+        THREEFEMALE = 6
+    
     number = models.PositiveIntegerField(validators=[MinValueValidator(1),MaxValueValidator(2000)],unique=True)
     name = models.CharField(max_length = 100,unique=True)
     
@@ -37,7 +47,8 @@ class PokemonSpecies(models.Model):
     hatch_cycles = models.PositiveIntegerField(validators=[MinValueValidator(5),MaxValueValidator(255)],default=15)
 
     base_happiness = models.SmallIntegerField(validators=[MinValueValidator(0),MaxValueValidator(255)],default=50)
-
+    
+    gender_rate = models.IntegerField(choices = GenderRate,default=GenderRate.EQUAL)
 
     def __str__(self):
         return self.name
@@ -45,15 +56,7 @@ class PokemonSpecies(models.Model):
 
 
 class Pokemon(models.Model):
-    class GenderRate(models.IntegerChoices):
-        GENDERLESS = -1
-        MALE = 0
-        FEMALE = 8
-        EQUAL = 4
-        SEVENMALE = 1
-        SEVENFEMALE = 7
-        THREEMALE = 2
-        THREEFEMALE = 6
+    
 
 
     class Meta:
@@ -67,21 +70,21 @@ class Pokemon(models.Model):
     
     type1 = models.ForeignKey(to=PokemonType, on_delete=models.RESTRICT,related_name = 'type1_pokemon')
     type2 = models.ForeignKey(to=PokemonType, on_delete=models.RESTRICT, blank = True, null = True, related_name = 'type2_pokemon')
-    color = models.ForeignKey(to=PokemonColor,on_delete=models.RESTRICT)
-    gender_rate = models.IntegerField(choices = GenderRate)
+    color = models.ForeignKey(to=PokemonColor,on_delete=models.RESTRICT,null=True)
+   
     
     generation = models.PositiveIntegerField(default = 1)
     
     
     height = models.DecimalField(max_digits=10,decimal_places=2,validators=[MinValueValidator(0.01)])
     weight = models.DecimalField(max_digits=10,decimal_places=2,validators=[MinValueValidator(0.01)])
-    shape = models.ForeignKey(to=PokemonShape,on_delete=models.RESTRICT)
+    shape = models.ForeignKey(to=PokemonShape,on_delete=models.RESTRICT,null=True)
     dex_entry = models.TextField(default = '')
     form_order = models.SmallIntegerField(validators=[MinValueValidator(0)],default=0)
     
     pokeapi_id = models.PositiveIntegerField(default=1)
     
-    is_female = models.BooleanField(default=False)
+   
 
     
 

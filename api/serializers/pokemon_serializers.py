@@ -1,7 +1,6 @@
 
 from rest_framework import serializers
-from api.models.pokemon_models import Pokemon,PokemonSpecies
-from api.models.default_models import *
+from api.models import *
 from django.urls import reverse
 
 
@@ -42,6 +41,7 @@ class PokemonSpeciesDetailSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'number',
             'name',
+            'gender_rate',
             'catch_rate',
             'base_happiness',
             'hatch_cycles',
@@ -87,10 +87,12 @@ class PokemonDetailSerializer(serializers.HyperlinkedModelSerializer):
     color = serializers.SerializerMethodField()
     shape = serializers.SerializerMethodField()
 
-    
+    abilities = serializers.SerializerMethodField()
+    stats =  serializers.SerializerMethodField()
 
     pokeapi_id = serializers.SerializerMethodField()
     
+
     class Meta:
         model = Pokemon
         fields = [
@@ -100,12 +102,12 @@ class PokemonDetailSerializer(serializers.HyperlinkedModelSerializer):
             'title',
             'generation',
             'form_order',
-            'is_female',
             'type1',
             'type2',
+            'abilities',
+            'stats',
             'height',
             'weight',
-            'gender_rate',
             'color',
             'shape',
             'dex_entry',
@@ -131,13 +133,43 @@ class PokemonDetailSerializer(serializers.HyperlinkedModelSerializer):
     def get_color(self,obj):
         return get_related_field(self,obj,'color','pokemon-color')
     
+    def get_abilities(self,obj):
+        abilities = PokemonAbility.objects.filter(pokemon=obj)
+        abilities_list = []
+        for ability in abilities:
+            abilities_list.append({
+                'url':
+                    self.context['request'].build_absolute_uri(
+                    reverse('ability-detail', args=[ability.ability.pk])),
+
+               'name':ability.ability.name,
+               'is_hidden':ability.is_hidden}
+               )
+            #print(abilities,type(abilities))
+        
+        return abilities_list
+    
+    def get_stats(self,obj):
+        stats = PokemonStat.objects.filter(pokemon=obj)
+        stats_dict = {}
+        for stat in stats:
+            
+            stats_dict[stat.stat.name] = ({
+                'url':
+                    self.context['request'].build_absolute_uri(
+                    reverse('stat-detail', args=[stat.stat.pk])),
+               'value':stat.value}
+               )
+            #print(abilities,type(abilities))
+        
+        return stats_dict
     
     def get_pokeapi_id(self,obj):
         field_instance = getattr(obj,'pokeapi_id')
         if field_instance:
             return {
                 'id': field_instance,
-                'url': f'https://pokeapi.co/api/v2/pokemon/{field_instance}',
+                'url': f'https://pokeapi.co/api/v2/pokemon-form/{field_instance}',
                 
 
             }
